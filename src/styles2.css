@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap');
+
+/* Navbar */
+.logo {
+    height: 80px; /* Define a altura da logo */
+    width: auto; /* Mantém a proporção da imagem */
+    object-fit: contain; /* Garante que a imagem se encaixe */
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(26, 24, 24);
+    border-bottom: 2px solid rgb(170, 43, 26);
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Define a altura do cabeçalho */
+    z-index: 1000;
+    box-sizing: border-box;
+    justify-content: space-between;
+  }
+  
+  .navbar .logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Certifique-se de que os itens da lista ocupem toda a altura do cabeçalho */
+  }
+  
+  .nav-links li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    height: 100%; /* Faz os itens ocuparem toda a altura do cabeçalho */
+  }
+  
+  .nav-links li:not(:last-child)::after { 
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0; /* Faz com que a linha ocupe toda a altura */
+    width: 1px;
+    background-color: #fff; /* Cor da borda */
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    height: 100%; /* Garante que o link ocupe toda a altura do item */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links a:hover {
+    color: rgb(170, 43, 26);
+  }
+
+  body {
+    padding-top: 100px;
+      font-family: Inria Sans;
+      background-color:rgb(26, 24, 24);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url('opc2.jpg'); /* Caminho da imagem */
+      background-size: cover; /* Use 'cover' para garantir que a imagem preencha a tela sem distorcer */
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;  /* Impede a rolagem da página */
+    }
+
+    h1{
+        justify-content: center;
+        display: flex;
+      }
