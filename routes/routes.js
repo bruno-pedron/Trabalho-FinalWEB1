@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const ContactController = require('../controllers/ContactController');  // Caminho correto
+const MovieController = require('../controllers/MovieController');  // Caminho correto
 
 const routes = Router();
 
-routes.get('/filmes', ContactController.index);
-routes.get('/filmes/:id', ContactController.show);
-routes.post('/filmes', ContactController.store);
-routes.put('/filmes/:id', ContactController.update);
-routes.delete('/filmes/:id', ContactController.delete);
+routes.get('/filmes', MovieController.index);
+routes.get('/filmes/:id', MovieController.show);
+routes.post('/filmes', MovieController.store);
+routes.put('/filmes/:id', MovieController.update);
+routes.delete('/filmes/:id', MovieController.delete);
 
 module.exports = routes;

@@ -1,10 +1,9 @@
-// controllers/ContactController.js
-const ContactRepository = require('../repositories/ContactRepository');
+const MovieRepository = require('../repositories/MovieRepository');
 
-class ContactController {
+class MovieController {
     async index(req, res) {
         try {
-            const filmes = await ContactRepository.findAll();
+            const filmes = await MovieRepository.findAll();
             res.json(filmes);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao recuperar filmes' });
@@ -14,7 +13,7 @@ class ContactController {
     async show(req, res) {
         try {
             const { id } = req.params;
-            const filme = await ContactRepository.findById(id);
+            const filme = await MovieRepository.findById(id);
             if (filme) {
                 res.json(filme);
             } else {
@@ -33,7 +32,7 @@ class ContactController {
             }
     
             try {
-                await ContactRepository.create(tit, gen, ano_lanc, aval);
+                await MovieRepository.create(tit, gen, ano_lanc, aval);
                 res.status(201).json({ message: 'Filme adicionado com sucesso.' });
             } catch (err) {
                 console.error(err);
@@ -53,7 +52,7 @@ class ContactController {
     
             try {
                 // Chama o método no repositório para atualizar o filme
-                const result = await ContactRepository.update(id, tit, gen, ano_lanc, aval);
+                const result = await MovieRepository.update(id, tit, gen, ano_lanc, aval);
     
                 if (result.affectedRows === 0) {
                     return res.status(404).json({ error: 'Filme não encontrado.' });
@@ -72,7 +71,7 @@ class ContactController {
     
             try {
                 // Chama o método no repositório para deletar o filme
-                const result = await ContactRepository.delete(id);
+                const result = await MovieRepository.delete(id);
     
                 if (result.affectedRows === 0) {
                     return res.status(404).json({ error: 'Filme não encontrado.' });
@@ -87,4 +86,4 @@ class ContactController {
         }
 }
 
-module.exports = new ContactController();
+module.exports = new MovieController();

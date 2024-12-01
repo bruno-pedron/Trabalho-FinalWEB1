@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FilmCenter</title>
+    <link rel="stylesheet" href="/src/css/styles3.css" />
+  </head>
+  <header>
+    <nav class="navbar">
+        <h1 class="logo"><img src="/src/Img/film.png"></h1>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="CadFilme.html">Cadastrar</a></li>
+            <li><a href="filmes.html">Filmes</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="films-container">
+        <h1>Filmes Cadastrados</h1>
+        <table class="films-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Gênero</th>
+                    <th>Ano de Lançamento</th>
+                    <th>Avaliação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas de filmes serão inseridas aqui dinamicamente -->
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Gerenciador de Filmes. Todos os direitos reservados.</p>
+</footer>
+</body>
+<script src="./js/filmes.js"></script>
+</html>

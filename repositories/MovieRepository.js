@@ -1,6 +1,6 @@
 const db = require('../models/ConnectDatabase');
 
-class ContactRepository {
+class MovieRepository {
     // Método para buscar todos os filmes com informações do gênero
         async findAll() {
             const [rows] = await db.query(`
@@ -56,7 +56,7 @@ class ContactRepository {
     }
 
     // Método para deletar um filme
-    // Em ContactRepository.js
+    // Em MovieRepository.js
     async delete(id) {
         const result = await db.query(`
             DELETE FROM filmes WHERE idF = ?;
@@ -67,4 +67,4 @@ class ContactRepository {
 
 }
 
-module.exports = new ContactRepository();
+module.exports = new MovieRepository();
