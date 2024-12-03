@@ -1,12 +1,25 @@
-const { Router } = require('express');
-const MovieController = require('../controllers/MovieController');  // Caminho correto
+const express = require("express");
+const router = express.Router();
+const path = require("path");
+const MovieController = require("../controllers/MovieController");
 
-const routes = Router();
+// Rotas para páginas HTML
+router.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../src/html/index.html"));
+});
 
-routes.get('/filmes', MovieController.index);
-routes.get('/filmes/:id', MovieController.show);
-routes.post('/filmes', MovieController.store);
-routes.put('/filmes/:id', MovieController.update);
-routes.delete('/filmes/:id', MovieController.delete);
+router.get("/cadastrar", (req, res) => {
+    res.sendFile(path.join(__dirname, "../src/html/CadFilme.html"));
+});
 
-module.exports = routes;
+router.get("/filmes", (req, res) => {
+    res.sendFile(path.join(__dirname, "../src/html/Filmes.html"));
+});
+
+// Rotas da API
+router.post("/filmes", MovieController.store);
+router.get("/api/filmes", MovieController.index);
+router.put("/filmes/:id", MovieController.update);
+router.delete("/filmes/:id", MovieController.delete);
+
+module.exports = router;

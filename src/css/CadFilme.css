@@ -72,7 +72,7 @@
 }
 
 body {
-  padding-top: 100px;
+  padding-top: 80px;
     font-family: Inria Sans;
     background-color:rgb(26, 24, 24);
     display: flex;
@@ -80,11 +80,10 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url('/src/Img/opc2.jpg'); /* Caminho da imagem */
+    background-image: url('../Img/opc2.jpg'); /* Caminho da imagem */
     background-size: cover; /* Use 'cover' para garantir que a imagem preencha a tela sem distorcer */
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;  /* Impede a rolagem da página */
   }
 
   .form-container {
@@ -92,21 +91,22 @@ body {
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   h1{
     justify-content: center;
     display: flex;
+    height: auto;
   }
 
   .input-titulo {
-    width: 80%;
+    width: 90%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 5px;
     border-radius: 10px; /* Mais arredondado */
     border: 1px solid #ccc;
@@ -114,7 +114,7 @@ body {
 }
 
 .input-ano {
-    width: 15%;
+    width: 25%;
     padding: 8px;
     font-size: 16px;
     margin-top: 5px;
@@ -124,7 +124,7 @@ body {
 }
 
 .select-genero {
-    width: 45%;
+    width: 55%;
     padding: 9px;
     font-size: 16px;
     margin-top: 5px;
@@ -135,7 +135,7 @@ body {
 
   .rating {
     display: flex;
-    transform: translate(-39%,5%) rotateY(180deg); /* Mantém a rotação */
+    transform: translate(-17%,5%) rotateY(180deg); /* Mantém a rotação */
 }
   
   .rating input{
@@ -173,12 +173,6 @@ body {
   .rating label:hover ~ label:after,
   .rating input:checked ~ label:after{
     opacity: 1;
-  }
-
-  #img1{
-    display: flex;
-    width: 200px;
-    float: right;
   }
 
   button[type="submit"] {

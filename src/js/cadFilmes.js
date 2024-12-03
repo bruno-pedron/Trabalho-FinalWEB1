@@ -1,18 +1,20 @@
 document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
 
-    const title = document.getElementById("nome").value;
-    const genre = document.getElementById("produto").value;
-    const year = document.getElementById("email").value;
+    const tit = document.getElementById("titulo").value; // ID corrigido
+    const gen = document.getElementById("genero").value; // ID correto
+    const ano_lanc = document.getElementById("ano").value; // ID corrigido
 
-    let rating;
+    let aval;
     const ratingElements = document.getElementsByName("star");
     for (let i = 0; i < ratingElements.length; i++) {
-    if (ratingElements[i].checked) {
-        rating = ratingElements[i].value;  // Captura o valor da estrela selecionada
-        break;
+        if (ratingElements[i].checked) {
+            aval = ratingElements[i].value;  // Captura o valor da estrela selecionada
+            break;
         }
     }
+
+    console.log("Enviando dados:", {tit,gen,ano_lanc,aval}); 
 
     try {
         const response = await fetch("http://localhost:3000/filmes", {
@@ -21,10 +23,10 @@ document.getElementById("cadastroForm").addEventListener("submit", async (e) => 
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                title,
-                genre,
-                year,
-                rating,
+                tit,
+                gen,
+                ano_lanc,
+                aval,
             }),
         });
 

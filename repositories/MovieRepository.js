@@ -42,7 +42,7 @@ class MovieRepository {
             INSERT INTO filmes (tit, gen, ano_lanc, aval) 
             VALUES (?, ?, ?, ?);
         `, [tit, gen, ano_lanc, aval]);
-    }
+    }    
 
     // Método para atualizar informações de um filme
     async update(id, tit, gen, ano_lanc, aval) {

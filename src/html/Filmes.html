@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FilmCenter</title>
-    <link rel="stylesheet" href="/src/css/styles3.css" />
+    <link rel="stylesheet" href="../css/Filmes.css" />
   </head>
   <header>
     <nav class="navbar">
-        <h1 class="logo"><img src="/src/Img/film.png"></h1>
+        <h1 class="logo"><img src="../Img/film.png"></h1>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="CadFilme.html">Cadastrar</a></li>
-            <li><a href="filmes.html">Filmes</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cadastrar">Cadastrar</a></li>
+            <li><a href="/filmes">Filmes</a></li>
         </ul>
     </nav>
 </header>
@@ -22,11 +22,11 @@
         <h1>Filmes Cadastrados</h1>
         <table class="films-table">
             <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Gênero</th>
-                    <th>Ano de Lançamento</th>
-                    <th>Avaliação</th>
+                <tr class="nob">
+                    <td>Título</td>
+                    <td>Gênero</td>
+                    <td>Ano de Lançamento</td>
+                    <td>Avaliação</td>                    
                 </tr>
             </thead>
             <tbody>
@@ -35,9 +35,6 @@
         </table>
     </section>
 </main>
-<footer>
-    <p>&copy; 2024 Gerenciador de Filmes. Todos os direitos reservados.</p>
-</footer>
 </body>
-<script src="./js/filmes.js"></script>
+<script src="../js/filmes.js"></script>
 </html>

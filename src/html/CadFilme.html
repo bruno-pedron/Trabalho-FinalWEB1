@@ -4,22 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FilmCenter</title>
-    <link rel="stylesheet" href="/src/css/styles1.css" />
+    <link rel="stylesheet" href="../css/CadFilme.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <header>
     <nav class="navbar">
-        <h1 class="logo"><img src="/src/Img/film.png"></h1>
+        <h1 class="logo"><img src="../Img/film.png"></h1>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="CadFilme.html">Cadastrar</a></li>
-            <li><a href="filmes.html">Filmes</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cadastrar">Cadastrar</a></li>
+            <li><a href="/filmes">Filmes</a></li>
         </ul>
     </nav>
 </header>
   <body>
     <div class="form-container">
-      <img src="/src/Img/film.png">
+      <img src="../Img/film.png" class="logo">
       <h1>Cadastrar Filme</h1>
       <form id="cadastroForm">
         <label for="titulo">Título:</label>
@@ -32,15 +32,15 @@
         <br>
         <label for="genero">Gênero:</label>
         <br>
-        <select id="produto" name="produto" class="select-genero" required>
-            <option value="acao">Ação</option>
-            <option value="comedia">Comédia</option>
-            <option value="drama">Drama</option>
-            <option value="ficcao">Ficção Científica</option>
-            <option value="terror">Terror</option>
-            <option value="animacao">Animação</option>
-            <option value="romance">Romance</option>
-            <option value="aventura">Aventura</option>
+        <select id="genero" name="genero" class="select-genero" required>
+            <option value="1">Ação</option>
+            <option value="2">Comédia</option>
+            <option value="3">Drama</option>
+            <option value="4">Ficção Científica</option>
+            <option value="5">Terror</option>
+            <option value="6">Animação</option>
+            <option value="7">Romance</option>
+            <option value="8">Aventura</option>
         </select>
         <br>
         <label for="rating">Avaliação:</label>
@@ -57,5 +57,5 @@
       </form>
     </div>
   </body>
-  <script src="./js/cadFilme.js"></script>
+  <script src="../js/cadFilmes.js"></script>
 </html>

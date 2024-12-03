@@ -80,11 +80,10 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url('/src/Img/opc2.jpg'); /* Caminho da imagem */
+    background-image: url('../Img/opc2.jpg'); /* Caminho da imagem */
     background-size: cover; /* Use 'cover' para garantir que a imagem preencha a tela sem distorcer */
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;  /* Impede a rolagem da página */
 }
 
 h1{
@@ -98,13 +97,13 @@ h1{
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     margin: 20px auto;
-    max-width: 90%;
+    max-width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .films-container h1 {
-    color: #e50914;
-    font-size: 32px;
+    color:  #320202;
+    font-size: 34px;
     margin-bottom: 20px;
 }
 
@@ -135,4 +134,38 @@ h1{
 
 .films-table tr:hover {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nob{
+  text-decoration: underline;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.popup h2 {
+  margin-top: 0;
+}
+
+.popup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.popup input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

@@ -1,19 +1,18 @@
-// server.js
-const express = require('express');
-const routes = require('./routes/routes'); // Importando as rotas
-const path = require('path');
+const express = require("express");
+const routes = require("./routes/routes");
+const path = require("path");
 const app = express();
 const PORT = 3000;
 
-app.use(express.json()); // Para poder lidar com requisições em JSON
+// Middleware para JSON
+app.use(express.json());
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'src')));
+// Servir arquivos estáticos do diretório correto
+app.use(express.static(path.join(__dirname, "src")));
 
-// Usar as rotas
+// Rotas
 app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
-
