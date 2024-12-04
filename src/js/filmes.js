@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const filmesContainer = document.querySelector('.films-table tbody'); // Container correto
 
             filmes.forEach(filme => {
-
+                const estrelas = '★'.repeat(filme.Avaliação);
                 const filmeRow = document.createElement('tr');
                 filmeRow.innerHTML = `
                     <td>${filme.Título}</td>  <!-- Nome correto do campo -->
                     <td>${filme.Gênero}</td>  <!-- Nome correto do campo -->
                     <td class="ano">${filme['Ano de Lançamento']}</td> <!-- Nome correto do campo -->
-                    <td>${filme.Avaliação} estrelas</td> <!-- Nome correto do campo -->
+                    <td>${estrelas}</td> <!-- Nome correto do campo -->
                     <td>
                         <button class="editar" onclick="mostrarFormularioEdicao({ Título: '${filme.Título}', Gênero: '${filme.Gênero}', ['Ano de Lançamento']: ${filme['Ano de Lançamento']}, Avaliação: ${filme.Avaliação}, idf: ${filme.idf} })">Editar</button>
                         <button class="excluir" onclick="deletarFilme(${filme.idf})">Excluir</button>
@@ -36,6 +36,40 @@ function mostrarFormularioEdicao(filme) {
     const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
     document.body.insertAdjacentHTML("beforeend", overlayHTML);
 
+    // Array de gêneros para gerar as opções dinamicamente
+    const generos = [
+        { id: 1, nome: "Ação" },
+        { id: 2, nome: "Comédia" },
+        { id: 3, nome: "Drama" },
+        { id: 4, nome: "Ficção Científica" },
+        { id: 5, nome: "Terror" },
+        { id: 6, nome: "Animação" },
+        { id: 7, nome: "Romance" },
+        { id: 8, nome: "Aventura" },
+    ];
+
+    // Debug: Verificar valor do gênero atual
+    console.log("Gênero atual:", filme.Gênero);
+
+    // Gera as opções do select com o gênero atual como o primeiro
+    const generoOptions = generos
+        .map((genero) => {
+            const isSelected = String(filme.Gênero).trim() === String(genero.nome).trim();
+            return `<option value="${genero.id}" ${isSelected ? "selected" : ""}>${genero.nome}</option>`;
+        })
+        .join("");
+
+    // Gera os inputs de avaliação com a avaliação atual pré-marcada
+    const avaliacaoInputs = Array.from({ length: 5 }, (_, i) => {
+        const value = 5 - i; // Cria as estrelas de 5 a 1
+        return `
+            <input type="radio" name="star" id="star${value}" value="${value}" ${
+            filme.Avaliação == value ? "checked" : ""
+        }>
+            <label for="star${value}"></label>
+        `;
+    }).join("");
+
     const formHTML = `
     <div id="popup-edicao" class="popup">
       <div class="form-container">
@@ -50,23 +84,12 @@ function mostrarFormularioEdicao(filme) {
           
           <label for="genero">Gênero:</label>
           <select id="genero" name="genero" class="select-genero" required>
-            <option value="1" ${filme.Gênero == 1 ? "selected" : ""}>Ação</option>
-            <option value="2" ${filme.Gênero == 2 ? "selected" : ""}>Comédia</option>
-            <option value="3" ${filme.Gênero == 3 ? "selected" : ""}>Drama</option>
-            <option value="4" ${filme.Gênero == 4 ? "selected" : ""}>Ficção Científica</option>
-            <option value="5" ${filme.Gênero == 5 ? "selected" : ""}>Terror</option>
-            <option value="6" ${filme.Gênero == 6 ? "selected" : ""}>Animação</option>
-            <option value="7" ${filme.Gênero == 7 ? "selected" : ""}>Romance</option>
-            <option value="8" ${filme.Gênero == 8 ? "selected" : ""}>Aventura</option>
+            ${generoOptions}
           </select>
           
           <label for="avaliacao">Avaliação:</label>
           <div id="avaliacao">
-            <input type="radio" name="star" id="star5" value="5" ${filme.Avaliação == 5 ? "selected" : ""}><label for="star5"></label>
-            <input type="radio" name="star" id="star4" value="4" ${filme.Avaliação == 4 ? "selected" : ""}><label for="star4"></label>
-            <input type="radio" name="star" id="star3" value="3" ${filme.Avaliação == 3 ? "selected" : ""}><label for="star3"></label>
-            <input type="radio" name="star" id="star2" value="2" ${filme.Avaliação == 2 ? "selected" : ""}><label for="star2"></label>
-            <input type="radio" name="star" id="star1" value="1" ${filme.Avaliação == 1 ? "selected" : ""}><label for="star1"></label>
+            ${avaliacaoInputs}
           </div>
           
           <button type="submit" class="btn-enviar">Salvar</button>
@@ -89,7 +112,6 @@ function mostrarFormularioEdicao(filme) {
     document.getElementById("cancelar").addEventListener("click", fecharPopup);
 }
 
-
 // Função para fechar o pop-up
 function fecharPopup() {
     const popup = document.getElementById("popup-edicao");
@@ -101,7 +123,6 @@ function fecharPopup() {
         overlay.remove();
     }
 }
-
 
 // Função para editar filme
 async function editarFilme(id) {

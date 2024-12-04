@@ -74,16 +74,16 @@
 body {
   padding-top: 80px;
     font-family: Inria Sans;
-    background-color:rgb(26, 24, 24);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    margin-top: -2%;
     background-image: url('../Img/opc2.jpg'); /* Caminho da imagem */
     background-size: cover; /* Use 'cover' para garantir que a imagem preencha a tela sem distorcer */
     background-position: center;
     background-repeat: no-repeat;
+    overflow: hidden;
   }
 
   .form-container {
@@ -95,6 +95,7 @@ body {
     display: flex;
     flex-direction: column;
     font-size: 18px;
+    color: #ffffff;
   }
 
   h1{
