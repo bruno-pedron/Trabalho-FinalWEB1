@@ -3,22 +3,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('http://localhost:3000/api/filmes');
         if (response.ok) {
             const filmes = await response.json();
-            console.log('Resposta da API:', filmes); // Log para ver a estrutura exata da resposta
 
             const filmesContainer = document.querySelector('.films-table tbody'); // Container correto
 
             filmes.forEach(filme => {
-                console.log(filme);  // Log de cada filme antes de adicionar na tabela
 
                 const filmeRow = document.createElement('tr');
                 filmeRow.innerHTML = `
                     <td>${filme.Título}</td>  <!-- Nome correto do campo -->
                     <td>${filme.Gênero}</td>  <!-- Nome correto do campo -->
-                    <td>${filme['Ano de Lançamento']}</td> <!-- Nome correto do campo -->
+                    <td class="ano">${filme['Ano de Lançamento']}</td> <!-- Nome correto do campo -->
                     <td>${filme.Avaliação} estrelas</td> <!-- Nome correto do campo -->
                     <td>
-                        <button onclick="mostrarFormularioEdicao({ Título: '${filme.Título}', Gênero: '${filme.Gênero}', ['Ano de Lançamento']: ${filme['Ano de Lançamento']}, Avaliação: ${filme.Avaliação}, idf: ${filme.idf} })">Editar</button>
-                        <button onclick="deletarFilme(${filme.idf})">Excluir</button>
+                        <button class="editar" onclick="mostrarFormularioEdicao({ Título: '${filme.Título}', Gênero: '${filme.Gênero}', ['Ano de Lançamento']: ${filme['Ano de Lançamento']}, Avaliação: ${filme.Avaliação}, idf: ${filme.idf} })">Editar</button>
+                        <button class="excluir" onclick="deletarFilme(${filme.idf})">Excluir</button>
                     </td>
                 `;
                 filmesContainer.appendChild(filmeRow);
@@ -34,33 +32,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Função para criar o pop-up de edição
 function mostrarFormularioEdicao(filme) {
-    console.log('Abrindo formulário de edição para:', filme);
+    // Adiciona o fundo desfocado (overlay)
+    const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
+    document.body.insertAdjacentHTML("beforeend", overlayHTML);
+
     const formHTML = `
-        <div id="popup-edicao" class="popup">
-            <form id="form-edicao">
-                <h2>Editar Filme</h2>
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" value="${filme.Título}">
-                <label for="genero">Gênero:</label>
-                <select id="genero" name="genero">
-                    <option value="1" ${filme.Gênero == 1 ? "selected" : ""}>Ação</option>
-                    <option value="2" ${filme.Gênero == 2 ? "selected" : ""}>Comédia</option>
-                    <option value="3" ${filme.Gênero == 3 ? "selected" : ""}>Drama</option>
-                    <option value="4" ${filme.Gênero == 4 ? "selected" : ""}>Ficção Científica</option>
-                    <option value="5" ${filme.Gênero == 5 ? "selected" : ""}>Terror</option>
-                    <option value="6" ${filme.Gênero == 6 ? "selected" : ""}>Animação</option>
-                    <option value="7" ${filme.Gênero == 7 ? "selected" : ""}>Romance</option>
-                    <option value="8" ${filme.Gênero == 8 ? "selected" : ""}>Aventura</option>
-                </select>
-                <label for="ano">Ano de Lançamento:</label>
-                <input type="number" id="ano" name="ano" value="${filme['Ano de Lançamento']}"> 
-                <label for="avaliacao">Avaliação:</label>
-                <input type="number" id="avaliacao" name="avaliacao" min="0" max="10" value="${filme.Avaliação}">
-                <button type="submit">Salvar</button>
-                <button type="button" id="cancelar">Cancelar</button>
-            </form>
-        </div>
-    `;
+    <div id="popup-edicao" class="popup">
+      <div class="form-container">
+        <img src="../Img/film.png" class="logo">
+        <h1>Editar Filme</h1>
+        <form id="form-edicao">
+          <label for="titulo">Título:</label>
+          <input type="text" id="titulo" name="titulo" class="input-titulo" value="${filme.Título}" required>
+          
+          <label for="ano">Ano de Lançamento:</label>
+          <input type="number" id="ano" name="ano" class="input-ano" value="${filme['Ano de Lançamento']}" required>
+          
+          <label for="genero">Gênero:</label>
+          <select id="genero" name="genero" class="select-genero" required>
+            <option value="1" ${filme.Gênero == 1 ? "selected" : ""}>Ação</option>
+            <option value="2" ${filme.Gênero == 2 ? "selected" : ""}>Comédia</option>
+            <option value="3" ${filme.Gênero == 3 ? "selected" : ""}>Drama</option>
+            <option value="4" ${filme.Gênero == 4 ? "selected" : ""}>Ficção Científica</option>
+            <option value="5" ${filme.Gênero == 5 ? "selected" : ""}>Terror</option>
+            <option value="6" ${filme.Gênero == 6 ? "selected" : ""}>Animação</option>
+            <option value="7" ${filme.Gênero == 7 ? "selected" : ""}>Romance</option>
+            <option value="8" ${filme.Gênero == 8 ? "selected" : ""}>Aventura</option>
+          </select>
+          
+          <label for="avaliacao">Avaliação:</label>
+          <div id="avaliacao">
+            <input type="radio" name="star" id="star5" value="5" ${filme.Avaliação == 5 ? "selected" : ""}><label for="star5"></label>
+            <input type="radio" name="star" id="star4" value="4" ${filme.Avaliação == 4 ? "selected" : ""}><label for="star4"></label>
+            <input type="radio" name="star" id="star3" value="3" ${filme.Avaliação == 3 ? "selected" : ""}><label for="star3"></label>
+            <input type="radio" name="star" id="star2" value="2" ${filme.Avaliação == 2 ? "selected" : ""}><label for="star2"></label>
+            <input type="radio" name="star" id="star1" value="1" ${filme.Avaliação == 1 ? "selected" : ""}><label for="star1"></label>
+          </div>
+          
+          <button type="submit" class="btn-enviar">Salvar</button>
+          <button type="button" id="cancelar" class="btn-limpar">Cancelar</button>
+        </form>
+      </div>
+    </div>`;
 
     // Adiciona o formulário ao body
     document.body.insertAdjacentHTML("beforeend", formHTML);
@@ -76,20 +89,35 @@ function mostrarFormularioEdicao(filme) {
     document.getElementById("cancelar").addEventListener("click", fecharPopup);
 }
 
+
 // Função para fechar o pop-up
 function fecharPopup() {
     const popup = document.getElementById("popup-edicao");
+    const overlay = document.getElementById("popup-overlay");
     if (popup) {
         popup.remove();
     }
+    if (overlay) {
+        overlay.remove();
+    }
 }
+
 
 // Função para editar filme
 async function editarFilme(id) {
     const titulo = document.getElementById("titulo").value;
     const genero = document.getElementById("genero").value;
     const ano = document.getElementById("ano").value;
-    const avaliacao = document.getElementById("avaliacao").value;
+    const avaliacao = document.querySelector("#avaliacao input[type='radio']:checked")?.value || null;
+
+    const dados = {
+        tit: titulo,
+        gen: genero,
+        ano_lanc: ano,
+        aval: avaliacao,
+    };
+
+    console.log("Dados enviados:", dados);
 
     try {
         const response = await fetch(`http://localhost:3000/filmes/${id}`, {

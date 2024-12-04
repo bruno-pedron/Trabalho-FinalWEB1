@@ -136,36 +136,175 @@ h1{
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.films-table td.ano {
+  text-align: center; /* Centraliza o conteúdo na célula */
+}
+
 .nob{
   text-decoration: underline;
 }
 
-.popup {
+/* Estilo da pop-up de edição */
+/* Estilo do fundo desfocado */
+.popup-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  border-radius: 8px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+  backdrop-filter: blur(5px); /* Efeito de desfoque */
+  z-index: 999; /* Garantir que o fundo fique abaixo do pop-up */
 }
 
-.popup h2 {
-  margin-top: 0;
+/* Estilo do pop-up */
+.popup {
+  position:absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(170, 43, 26);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Garantir que o pop-up fique acima do overlay */
+}
+
+
+.popup h1 {
+  justify-content: center;
+  display: flex;
+  height: auto;
+  margin: 0 0 1rem;
+  color: white; /* Cor branca para contraste */
 }
 
 .popup label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   font-weight: bold;
+  color: white;
 }
 
-.popup input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
+.input-titulo {
+  width: 90%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px; /* Mais arredondado */
   border: 1px solid #ccc;
-  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.input-ano {
+  width: 25%;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 10px; /* Menos arredondado */
+  border: 1px solid #888;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.select-genero {
+  width: 55%;
+  padding: 9px;
+  font-size: 16px;
+  border-radius: 5px; /* Quase quadrado */
+  border: 1px solid #aaa;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Estilo para o rating */
+.popup #avaliacao {
+  display: flex;
+  transform: translate(-17%, 5%) rotateY(180deg); /* Igual ao cadastro */
+}
+
+.popup #avaliacao input {
+  display: none;
+}
+
+.popup #avaliacao label {
+  display: block;
+  cursor: pointer;
+  width: 50px;
+}
+
+.popup #avaliacao label:before {
+  content: '\f005';
+  font-family: fontAwesome;
+  position: relative;
+  display: block;
+  font-size: 50px;
+  color: #0e1316;
+}
+
+.popup #avaliacao label:after {
+  content: '\f005';
+  font-family: fontAwesome;
+  position: absolute;
+  display: block;
+  font-size: 50px;
+  color: #ffff00;
+  top: 0;
+  opacity: 0;
+  transition: .5;
+  text-shadow: 0 4px 5px rgba(0, 0, 0, .5);
+}
+
+.popup #avaliacao label:hover:after,
+.popup #avaliacao label:hover ~ label:after,
+.popup #avaliacao input:checked ~ label:after {
+  opacity: 1;
+}
+
+/* Botões de ação */
+.popup button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.popup button[type="submit"] {
+  background-color: #e50914;
+  color: white;
+}
+
+.popup button[type="button"] {
+  background-color: #555;
+  color: white;
+}
+
+.excluir {
+  background-color: #e50914;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.excluir:hover {
+  background-color: #b5060f;
+  transform: scale(1.05);
+}
+
+.editar {
+  background-color: #555;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.editar:hover {
+  background-color: #333;
+  transform: scale(1.05);
 }
