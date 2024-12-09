@@ -29,6 +29,72 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+function mostrarPopupConfirmacao(mensagem, callback) {
+    // Cria a sobreposição e o pop-up
+    const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
+    const popupHTML = `
+    <div id="popup-confirmacao" class="popup">
+        <p>${mensagem}</p>
+        <button id="confirmar" class="btn-enviar">Sim</button>
+        <button id="cancelar" class="btn-limpar">Não</button>
+    </div>`;
+    document.body.insertAdjacentHTML("beforeend", overlayHTML + popupHTML);
+
+    // Adiciona eventos aos botões
+    document.getElementById("confirmar").addEventListener("click", () => {
+        callback(true);
+        fecharPopup();
+    });
+
+    document.getElementById("cancelar").addEventListener("click", () => {
+        callback(false);
+        fecharPopup();
+    });
+
+    // Função para fechar o pop-up e remover a sobreposição
+    function fecharPopup() {
+        const overlay = document.getElementById("popup-overlay");
+        const popup = document.getElementById("popup-confirmacao");
+        if (overlay) overlay.remove();
+        if (popup) popup.remove();
+    }
+}
+
+function mostrarPopupAlerta(mensagem) {
+    const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
+    const popupHTML = `
+    <div id="popup-alerta" class="popup">
+        <p>${mensagem}</p>
+        <button id="fechar" class="btn-enviar">OK</button>
+    </div>`;
+    document.body.insertAdjacentHTML("beforeend", overlayHTML + popupHTML);
+
+    document.getElementById("fechar").addEventListener("click", () => {
+        document.getElementById("popup-overlay").remove();
+        document.getElementById("popup-alerta").remove();
+
+        // Garante o reload após a remoção dos elementos
+        setTimeout(() => {
+            location.reload();
+        }, 50);
+    });
+}
+
+function mostrarPopupAlertaNoReload(mensagem) {
+    const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
+    const popupHTML = `
+    <div id="popup-alerta" class="popup">
+        <p>${mensagem}</p>
+        <button id="fechar" class="btn-enviar">OK</button>
+    </div>`;
+    document.body.insertAdjacentHTML("beforeend", overlayHTML + popupHTML);
+
+    document.getElementById("fechar").addEventListener("click", () => {
+        document.getElementById("popup-overlay").remove();
+        document.getElementById("popup-alerta").remove();
+    });
+}
+
 
 // Função para criar o pop-up de edição
 function mostrarFormularioEdicao(filme) {
@@ -105,6 +171,15 @@ function mostrarFormularioEdicao(filme) {
     const form = document.getElementById("form-edicao");
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
+    
+        const ano = parseInt(document.getElementById("ano").value, 10);
+    
+        // Validação do ano de lançamento
+        if (ano <= 1888 || ano >= 2024) {
+            mostrarPopupAlertaNoReload("O ano de lançamento deve ser válido.");
+            return;
+        }   
+
         await editarFilme(filme.idf);
         fecharPopup();
     });
@@ -138,26 +213,18 @@ async function editarFilme(id) {
         aval: avaliacao,
     };
 
-    console.log("Dados enviados:", dados);
-
+    
     try {
         const response = await fetch(`http://localhost:3000/filmes/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                tit: titulo,
-                gen: genero,
-                ano_lanc: ano,
-                aval: avaliacao,
-            }),
+            body: JSON.stringify(dados),
         });
 
         if (response.ok) {
-            alert("Filme atualizado com sucesso!");
-            location.reload();
-            carregarFilmes();   
+            mostrarPopupAlerta("Filme editado com sucesso!");
         } else {
             alert("Erro ao atualizar o filme.");
         }
@@ -166,22 +233,21 @@ async function editarFilme(id) {
     }
 }
 
+
 async function deletarFilme(id) {
-    if (!confirm("Tem certeza de que deseja excluir este filme?")) return;
+    mostrarPopupConfirmacao("Tem certeza de que deseja excluir este filme?", async (confirmado) => {
+        if (!confirmado) return;
 
-    try {
-        const response = await fetch(`http://localhost:3000/filmes/${id}`, {
-            method: "DELETE",
-        });
-
-        if (response.ok) {
-            alert("Filme excluído com sucesso!");
-            location.reload(); // Atualiza a página para refletir as mudanças
-        } else {
-            const errorMsg = await response.text();
-            alert(`Erro ao excluir o filme: ${errorMsg}`);
+        try {
+            const response = await fetch(`http://localhost:3000/filmes/${id}`, { method: "DELETE" });
+            if (response.ok) {
+                mostrarPopupAlerta("Filme excluído com sucesso!");
+            } else {
+                const errorMsg = await response.text();
+                mostrarPopupAlerta(`Erro ao excluir o filme: ${errorMsg}`);
+            }
+        } catch (error) {
+            console.error("Erro ao excluir filme:", error);
         }
-    } catch (error) {
-        console.error("Erro ao excluir filme:", error);
-    }
+    });
 }
