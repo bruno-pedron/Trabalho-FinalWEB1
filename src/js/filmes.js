@@ -1,34 +1,3 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const response = await fetch('http://localhost:3000/api/filmes');
-        if (response.ok) {
-            const filmes = await response.json();
-
-            const filmesContainer = document.querySelector('.films-table tbody'); // Container correto
-
-            filmes.forEach(filme => {
-                const estrelas = '★'.repeat(filme.Avaliação);
-                const filmeRow = document.createElement('tr');
-                filmeRow.innerHTML = `
-                    <td>${filme.Título}</td>  <!-- Nome correto do campo -->
-                    <td>${filme.Gênero}</td>  <!-- Nome correto do campo -->
-                    <td class="ano">${filme['Ano de Lançamento']}</td> <!-- Nome correto do campo -->
-                    <td>${estrelas}</td> <!-- Nome correto do campo -->
-                    <td>
-                        <button class="editar" onclick="mostrarFormularioEdicao({ Título: '${filme.Título}', Gênero: '${filme.Gênero}', ['Ano de Lançamento']: ${filme['Ano de Lançamento']}, Avaliação: ${filme.Avaliação}, idf: ${filme.idf} })">Editar</button>
-                        <button class="excluir" onclick="deletarFilme(${filme.idf})">Excluir</button>
-                    </td>
-                `;
-                filmesContainer.appendChild(filmeRow);
-            });
-        } else {
-            console.error('Erro ao recuperar os filmes');
-        }
-    } catch (error) {
-        console.error('Erro na requisição:', error);
-    }
-});
-
 function mostrarPopupConfirmacao(mensagem, callback) {
     // Cria a sobreposição e o pop-up
     const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
@@ -95,6 +64,17 @@ function mostrarPopupAlertaNoReload(mensagem) {
     });
 }
 
+// Função para fechar o pop-up
+function fecharPopup() {
+    const popup = document.getElementById("popup-edicao");
+    const overlay = document.getElementById("popup-overlay");
+    if (popup) {
+        popup.remove();
+    }
+    if (overlay) {
+        overlay.remove();
+    }
+}
 
 // Função para criar o pop-up de edição
 function mostrarFormularioEdicao(filme) {
@@ -175,7 +155,7 @@ function mostrarFormularioEdicao(filme) {
         const ano = parseInt(document.getElementById("ano").value, 10);
     
         // Validação do ano de lançamento
-        if (ano <= 1888 || ano >= 2024) {
+        if (ano <= 1888 || ano > 2024) {
             mostrarPopupAlertaNoReload("O ano de lançamento deve ser válido.");
             return;
         }   
@@ -187,17 +167,38 @@ function mostrarFormularioEdicao(filme) {
     document.getElementById("cancelar").addEventListener("click", fecharPopup);
 }
 
-// Função para fechar o pop-up
-function fecharPopup() {
-    const popup = document.getElementById("popup-edicao");
-    const overlay = document.getElementById("popup-overlay");
-    if (popup) {
-        popup.remove();
+//-----------------------GET,PUT,DELETE---------------------------------
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('http://localhost:3000/api/filmes');
+        if (response.ok) {
+            const filmes = await response.json();
+
+            const filmesContainer = document.querySelector('.films-table tbody'); // Container correto
+
+            filmes.forEach(filme => {
+                const estrelas = '★'.repeat(filme.Avaliação);
+                const filmeRow = document.createElement('tr');
+                filmeRow.innerHTML = `
+                    <td>${filme.Título}</td>  <!-- Nome correto do campo -->
+                    <td>${filme.Gênero}</td>  <!-- Nome correto do campo -->
+                    <td class="ano">${filme['Ano de Lançamento']}</td> <!-- Nome correto do campo -->
+                    <td>${estrelas}</td> <!-- Nome correto do campo -->
+                    <td>
+                        <button class="editar" onclick="mostrarFormularioEdicao({ Título: '${filme.Título}', Gênero: '${filme.Gênero}', ['Ano de Lançamento']: ${filme['Ano de Lançamento']}, Avaliação: ${filme.Avaliação}, idf: ${filme.idf} })">Editar</button>
+                        <button class="excluir" onclick="deletarFilme(${filme.idf})">Excluir</button>
+                    </td>
+                `;
+                filmesContainer.appendChild(filmeRow);
+            });
+        } else {
+            console.error('Erro ao recuperar os filmes');
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
     }
-    if (overlay) {
-        overlay.remove();
-    }
-}
+});
 
 // Função para editar filme
 async function editarFilme(id) {

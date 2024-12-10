@@ -21,6 +21,8 @@ function fecharAlerta() {
     }
 }
 
+//-----------------------POST---------------------------------
+
 // Substitua os alertas no código de cadastro
 document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ document.getElementById("cadastroForm").addEventListener("submit", async (e) => 
     const gen = document.getElementById("genero").value;
     const ano_lanc = document.getElementById("ano").value;
 
-    if (ano_lanc <= 1888 || ano_lanc >= 2024) {
+    if (ano_lanc <= 1888 || ano_lanc > 2024) {
         mostrarAlerta("error", "Erro", "O ano de lançamento deve ser válido.");
         return;
     }
