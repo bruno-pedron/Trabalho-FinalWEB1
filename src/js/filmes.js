@@ -1,5 +1,4 @@
 function mostrarPopupConfirmacao(mensagem, callback) {
-    // Cria a sobreposição e o pop-up
     const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
     const popupHTML = `
     <div id="popup-confirmacao" class="popup">
@@ -9,7 +8,6 @@ function mostrarPopupConfirmacao(mensagem, callback) {
     </div>`;
     document.body.insertAdjacentHTML("beforeend", overlayHTML + popupHTML);
 
-    // Adiciona eventos aos botões
     document.getElementById("confirmar").addEventListener("click", () => {
         callback(true);
         fecharPopup();
@@ -19,14 +17,6 @@ function mostrarPopupConfirmacao(mensagem, callback) {
         callback(false);
         fecharPopup();
     });
-
-    // Função para fechar o pop-up e remover a sobreposição
-    function fecharPopup() {
-        const overlay = document.getElementById("popup-overlay");
-        const popup = document.getElementById("popup-confirmacao");
-        if (overlay) overlay.remove();
-        if (popup) popup.remove();
-    }
 }
 
 function mostrarPopupAlerta(mensagem) {
@@ -42,7 +32,6 @@ function mostrarPopupAlerta(mensagem) {
         document.getElementById("popup-overlay").remove();
         document.getElementById("popup-alerta").remove();
 
-        // Garante o reload após a remoção dos elementos
         setTimeout(() => {
             location.reload();
         }, 50);
@@ -64,9 +53,8 @@ function mostrarPopupAlertaNoReload(mensagem) {
     });
 }
 
-// Função para fechar o pop-up
 function fecharPopup() {
-    const popup = document.getElementById("popup-edicao");
+    const popup = document.querySelector(".popup");
     const overlay = document.getElementById("popup-overlay");
     if (popup) {
         popup.remove();
@@ -76,13 +64,11 @@ function fecharPopup() {
     }
 }
 
-// Função para criar o pop-up de edição
 function mostrarFormularioEdicao(filme) {
-    // Adiciona o fundo desfocado (overlay)
+
     const overlayHTML = `<div id="popup-overlay" class="popup-overlay"></div>`;
     document.body.insertAdjacentHTML("beforeend", overlayHTML);
 
-    // Array de gêneros para gerar as opções dinamicamente
     const generos = [
         { id: 1, nome: "Ação" },
         { id: 2, nome: "Comédia" },
@@ -94,20 +80,16 @@ function mostrarFormularioEdicao(filme) {
         { id: 8, nome: "Aventura" },
     ];
 
-    // Debug: Verificar valor do gênero atual
-    console.log("Gênero atual:", filme.Gênero);
-
-    // Gera as opções do select com o gênero atual como o primeiro
     const generoOptions = generos
         .map((genero) => {
+            //verifica se ele é o mesmo que o gênero do filme
             const isSelected = String(filme.Gênero).trim() === String(genero.nome).trim();
             return `<option value="${genero.id}" ${isSelected ? "selected" : ""}>${genero.nome}</option>`;
         })
         .join("");
 
-    // Gera os inputs de avaliação com a avaliação atual pré-marcada
     const avaliacaoInputs = Array.from({ length: 5 }, (_, i) => {
-        const value = 5 - i; // Cria as estrelas de 5 a 1
+        const value = 5 - i;
         return `
             <input type="radio" name="star" id="star${value}" value="${value}" ${
             filme.Avaliação == value ? "checked" : ""
@@ -144,17 +126,14 @@ function mostrarFormularioEdicao(filme) {
       </div>
     </div>`;
 
-    // Adiciona o formulário ao body
     document.body.insertAdjacentHTML("beforeend", formHTML);
 
-    // Configura eventos do formulário
     const form = document.getElementById("form-edicao");
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
     
         const ano = parseInt(document.getElementById("ano").value, 10);
     
-        // Validação do ano de lançamento
         if (ano <= 1888 || ano > 2024) {
             mostrarPopupAlertaNoReload("O ano de lançamento deve ser válido.");
             return;
@@ -167,7 +146,7 @@ function mostrarFormularioEdicao(filme) {
     document.getElementById("cancelar").addEventListener("click", fecharPopup);
 }
 
-//-----------------------GET,PUT,DELETE---------------------------------
+//-----------------------GET,PUT,DELETE---------------------------------//
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -200,7 +179,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Função para editar filme
 async function editarFilme(id) {
     const titulo = document.getElementById("titulo").value;
     const genero = document.getElementById("genero").value;
