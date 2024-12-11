@@ -29,9 +29,7 @@ function mostrarPopupAlerta(mensagem) {
     document.body.insertAdjacentHTML("beforeend", overlayHTML + popupHTML);
 
     document.getElementById("fechar").addEventListener("click", () => {
-        document.getElementById("popup-overlay").remove();
-        document.getElementById("popup-alerta").remove();
-
+        fecharPopup();
         setTimeout(() => {
             location.reload();
         }, 50);
@@ -82,7 +80,6 @@ function mostrarFormularioEdicao(filme) {
 
     const generoOptions = generos
         .map((genero) => {
-            //verifica se ele é o mesmo que o gênero do filme
             const isSelected = String(filme.Gênero).trim() === String(genero.nome).trim();
             return `<option value="${genero.id}" ${isSelected ? "selected" : ""}>${genero.nome}</option>`;
         })

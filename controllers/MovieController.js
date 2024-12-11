@@ -42,23 +42,20 @@ class MovieController {
     
 
         async update(req, res) {
-            const { id } = req.params;  // Pega o ID do filme da URL
-            const { tit, gen, ano_lanc, aval } = req.body; // Pega os dados do corpo da requisição
+            const { id } = req.params;
+            const { tit, gen, ano_lanc, aval } = req.body;
     
-            // Verifica se todos os campos necessários foram fornecidos
             if (!tit || !gen || !ano_lanc || !aval) {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
             }
     
             try {
-                // Chama o método no repositório para atualizar o filme
                 const result = await MovieRepository.update(id, tit, gen, ano_lanc, aval);
     
                 if (result.affectedRows === 0) {
                     return res.status(404).json({ error: 'Filme não encontrado.' });
                 }
     
-                // Retorna sucesso se o filme foi atualizado
                 res.status(200).json({ message: 'Filme atualizado com sucesso.' });
             } catch (err) {
                 console.error(err);
@@ -67,17 +64,15 @@ class MovieController {
         }
 
         async delete(req, res) {
-            const { id } = req.params; // Pega o ID do filme da URL
+            const { id } = req.params;
     
             try {
-                // Chama o método no repositório para deletar o filme
                 const result = await MovieRepository.delete(id);
     
                 if (result.affectedRows === 0) {
                     return res.status(404).json({ error: 'Filme não encontrado.' });
                 }
     
-                // Retorna sucesso se o filme foi deletado
                 res.status(200).json({ message: 'Filme deletado com sucesso.' });
             } catch (err) {
                 console.error(err);

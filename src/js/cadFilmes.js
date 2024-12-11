@@ -23,7 +23,6 @@ function fecharAlerta() {
 
 //-----------------------POST---------------------------------
 
-// Substitua os alertas no código de cadastro
 document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
